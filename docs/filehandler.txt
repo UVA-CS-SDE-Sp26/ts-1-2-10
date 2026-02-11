@@ -24,8 +24,8 @@ UML for fileHandler:
 fileHandler
 -------------------------
 +readFile():String[]
-+readFile(String file):String
-+readFile(String file, String key):String
++readFile(String fileName):String
++readFile(String fileName, String key):String
 
 Tests:
 readFile(), return String[], Program should return a String array of all files.
