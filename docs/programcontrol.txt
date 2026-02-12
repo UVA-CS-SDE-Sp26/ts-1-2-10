@@ -1,8 +1,21 @@
+For testing, we will use JUnit and Mockito depending on if a class is dependent on other classes.
+In our design, because Userinterface and Programcontrol are dependent on other classes, Mockito will be used
+to ensure unit testing and for Filehandler and Decipher, JUnit will be used to create unit tests. We are
+comprehensive testing our code using partition equivalence to ensure total code coverage. These tests will be
+written before code is written.
+
 UML -
 Programcontrol
 --------------
--fileName: String
--key: String
---------------
-+fetchFiles: String
-+fetchFile: String
++fetchFile(): String
++fetchFile(String fileName, String key): String
+
+PSEUDOCODE -
+
+fetchFile() -
+    new Filehandler obj
+    obj.readFile()
+
+fetchFile(fileName, key) -
+    new Filehandler obj
+    obj.readFile(fileName, key)
