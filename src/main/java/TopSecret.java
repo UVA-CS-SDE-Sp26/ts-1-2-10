@@ -28,7 +28,7 @@ public class TopSecret {
             }
         }
         catch(Exception e){
-            System.out.println("An error occured." + e.getMessage());
+            System.out.println("An error occurred. " + e.getMessage());
         }
     }
 }

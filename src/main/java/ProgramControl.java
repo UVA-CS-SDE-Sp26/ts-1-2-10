@@ -20,7 +20,7 @@ public class ProgramControl {
     public String fetchFile(String fileName) throws FileNotFoundException {
         String text;
         try{
-            int number = Integer.parseInt(fileHandler.readFile(fileName));
+            int number = Integer.parseInt(fileName);
             text = fileHandler.readFile(number);
         }
         catch (NumberFormatException e){
@@ -32,7 +32,7 @@ public class ProgramControl {
     public String fetchFile(String fileName, String key) throws FileNotFoundException {
         String text;
         try{
-            int number = Integer.parseInt(fileHandler.readFile(fileName));
+            int number = Integer.parseInt(fileName);
             text = fileHandler.readFile(number);
         }
         catch (NumberFormatException e){

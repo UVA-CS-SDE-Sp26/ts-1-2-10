@@ -107,5 +107,11 @@ public class FileHandlerTest {
         }, "Asking to read a file that does not exist should throw a ArrayIndexOutOfBoundsException.");
     }
 
-
+    @Test
+    void readFileExceptionWithNumberNullPointer() {
+        FileHandler fileHandler = new FileHandler("./emptyFile");
+        assertThrows(NullPointerException.class, () -> {
+            fileHandler.readFile(5);
+        }, "Asking to read a file that does not exist should throw a ArrayIndexOutOfBoundsException.");
+    }
 }

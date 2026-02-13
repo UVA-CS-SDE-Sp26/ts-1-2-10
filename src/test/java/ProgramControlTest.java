@@ -1,14 +1,16 @@
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class ProgramControlTest {
     @Mock
     private FileHandler fileHandler;
@@ -24,6 +26,12 @@ class ProgramControlTest {
     }
 
     @Test
+    void testDefaultConstructor() {
+        ProgramControl pc = new ProgramControl();
+        assertNotNull(pc);
+    }
+
+    @Test
     void testFetchFile_NoArgs() {
         String[] list = {"filea.txt", "fileb.txt"};
         when(fileHandler.readFile()).thenReturn(list);
@@ -36,7 +44,7 @@ class ProgramControlTest {
     void testFetchFile_OneArg() throws FileNotFoundException {
         String fileName = "test.txt";
         when(fileHandler.readFile(fileName)).thenReturn("Ciphered File Content");
-        when(cipher.decipher(fileName)).thenReturn("Deciphered File Content");
+        when(cipher.decipher("Ciphered File Content")).thenReturn("Deciphered File Content");
         assertEquals("Deciphered File Content", programControl.fetchFile(fileName));
 
         verify(fileHandler).readFile(fileName);
@@ -46,11 +54,11 @@ class ProgramControlTest {
     @Test
     void testFetchFile_OneArgInt() throws FileNotFoundException {
         String fileName = "1";
-        when(fileHandler.readFile(Integer.parseInt(fileName))).thenReturn("Ciphered File Content");
+        when(fileHandler.readFile(1)).thenReturn("Ciphered File Content");
         when(cipher.decipher("Ciphered File Content")).thenReturn("Deciphered File Content");
         assertEquals("Deciphered File Content", programControl.fetchFile(fileName));
 
-        verify(fileHandler).readFile(fileName);
+        verify(fileHandler).readFile(1);
         verify(cipher).decipher("Ciphered File Content");
     }
 
@@ -84,6 +92,18 @@ class ProgramControlTest {
         assertEquals("Deciphered File Content", programControl.fetchFile(fileName, key));
 
         verify(fileHandler).readFile(fileName);
+        verify(cipher).decipher("Ciphered File Content");
+    }
+
+    @Test
+    void testFetchFile_BothArgs_Int() throws FileNotFoundException {
+        String fileName = "1";
+        String key = "bcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890a";
+        when(fileHandler.readFile(1)).thenReturn("Ciphered File Content");
+        when(cipher.decipher("Ciphered File Content")).thenReturn("Deciphered File Content");
+        assertEquals("Deciphered File Content", programControl.fetchFile(fileName, key));
+
+        verify(fileHandler).readFile(1);
         verify(cipher).decipher("Ciphered File Content");
     }
 }
