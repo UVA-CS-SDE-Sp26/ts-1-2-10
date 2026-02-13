@@ -54,6 +54,9 @@ class ProgramControlTest {
     @Test
     void testFetchFile_OneArgInt() throws FileNotFoundException {
         String fileName = "1";
+        String[] fileList = {"file0.txt", "file1.dat"};
+        when(fileHandler.readFile()).thenReturn(fileList);
+
         when(fileHandler.readFile(1)).thenReturn("Ciphered File Content");
         when(cipher.decipher("Ciphered File Content")).thenReturn("Deciphered File Content");
         assertEquals("Deciphered File Content", programControl.fetchFile(fileName));
@@ -98,6 +101,9 @@ class ProgramControlTest {
     @Test
     void testFetchFile_BothArgs_Int() throws FileNotFoundException {
         String fileName = "1";
+        String[] fileList = {"file0.txt", "file1.cip"};
+        when(fileHandler.readFile()).thenReturn(fileList);
+
         String key = "bcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890a";
         when(fileHandler.readFile(1)).thenReturn("Ciphered File Content");
         when(cipher.decipher("Ciphered File Content")).thenReturn("Deciphered File Content");
