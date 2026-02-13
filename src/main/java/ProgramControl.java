@@ -27,7 +27,6 @@ public class ProgramControl {
             if(file.endsWith("txt"))
                 return text;
 
-            cipher.loadKey();
             return cipher.decipher(text);
         }
         catch (NumberFormatException e) {
@@ -35,7 +34,6 @@ public class ProgramControl {
             if(text.endsWith("txt"))
                 return text;
 
-            cipher.loadKey();
             return cipher.decipher(text);
         }
     }

@@ -7,26 +7,13 @@ public class Cipher {
     private String key1;
     private String key2;
 
-    public void loadKey() throws FileNotFoundException {
-        getAltKey("ciphers/key.txt");
+    public Cipher() {
+        key1 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        key2 = "bcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890a";
     }
 
     public void getAltKey(String altKey) throws FileNotFoundException {
-        Scanner scan = new Scanner(altKey);
-        if (!scan.hasNextLine()) {
-            throw new FileNotFoundException("Key file is empty");
-        }
-        if (scan.hasNextLine()) {
-            key1 = scan.nextLine();
-        }
-        if (scan.hasNextLine()) {
-            key2 = scan.nextLine();
-        }
-        else{
-            key2 = key1;
-            key1 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        }
-        scan.close();
+        key2 = altKey;
     }
 
     public String decipher(String text) {
