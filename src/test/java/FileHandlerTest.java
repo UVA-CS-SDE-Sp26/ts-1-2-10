@@ -87,24 +87,24 @@ public class FileHandlerTest {
                 "eftjhofe up npojups fnbjm boe fmfduspojd dpnnvojdbujpot. Ju vtfe b dvtupnjAbcmf qbdlfu tojggfs uibu dpvme npojups bmm\n" +
                 "pg b ubshfu vtfs't Joufsofu usbggjd. Dbsojwpsf xbt jnqmfnfoufe jo Pdupcfs 2008. Cz 3aa6 ju ibe cffo sfqmbdfe xjui\n" +
                 "jnqspwfe dpnnfsdjbm tpguxbsf.";
-        String expected = fileHandler.readFile(0);
+        String expected = fileHandler.readFile(1);
         assertEquals(content, expected, "When given a file number the output should be the relating file.");
     }
 
     @Test
     void readFileExceptionWithNumber() {
         FileHandler fileHandler = new FileHandler();
-        assertThrows(FileNotFoundException.class, () -> {
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
             fileHandler.readFile(5);
-        }, "Asking to read a file that does not exist should throw a FileNotFoundException.");
+        }, "Asking to read a file that does not exist should throw a ArrayIndexOutOfBoundsException.");
     }
 
     @Test
     void readFileExceptionWithNegativeNumber() {
         FileHandler fileHandler = new FileHandler();
-        assertThrows(FileNotFoundException.class, () -> {
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
             fileHandler.readFile(-1);
-        }, "Asking to read a file that does not exist should throw a FileNotFoundException.");
+        }, "Asking to read a file that does not exist should throw a ArrayIndexOutOfBoundsException.");
     }
 
 

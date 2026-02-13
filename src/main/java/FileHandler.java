@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 
 public class FileHandler {
 
@@ -35,9 +36,9 @@ public class FileHandler {
         return contents;
     }
 
-    public String readFile(int fileNumber) throws FileNotFoundException, NullPointerException, IndexOutOfBoundsException{
+    public String readFile(int fileNumber) throws FileNotFoundException, NullPointerException, ArrayIndexOutOfBoundsException{
         //returns the contents of the specified file
-        String path = "./data";
+        String path = "./data/";
         File directory = new File(path);
 
         String[] files = directory.list();
@@ -45,10 +46,11 @@ public class FileHandler {
         if(files == null){
             throw new NullPointerException("Files directory is empty.");
         }
-        if (fileNumber > files.length-1){
-            throw new IndexOutOfBoundsException("File does not exist.");
+        if (fileNumber > files.length+1 || fileNumber < 0){
+            throw new ArrayIndexOutOfBoundsException("File does not exist.");
         }
-        File file = new File(files[fileNumber-1]);
+        Arrays.sort(files);
+        File file = new File(path + files[(fileNumber-1)]);
         Scanner readIn = new Scanner(file);
 
         String contents = "";
