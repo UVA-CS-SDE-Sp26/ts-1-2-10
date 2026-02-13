@@ -68,4 +68,44 @@ public class FileHandlerTest {
             fileHandler.readFile("doesNotExist.txt");
         }, "Asking to read a file that does not exist should throw a FileNotFoundException.");
     }
+
+    @Test
+    void readFileWithNumberLast() throws FileNotFoundException{
+        FileHandler fileHandler = new FileHandler();
+        String content = "COINTELPRO (a syllabic abbreviation derived from Counter Intelligence Program) was a series of covert and illegal\n" +
+                "projects conducted between 1956 and 1971 by the United States Federal Bureau of Investigation (FBI) aimed at\n" +
+                "surveilling, infiltrating, discrediting, and disrupting American political parties and organizations that the FBI\n" +
+                "perceived as subversive.";
+        String expected = fileHandler.readFile(4);
+        assertEquals(content, expected, "When given a file number the output should be the relating file.");
+    }
+
+    @Test
+    void readFileWithNumberFirst() throws FileNotFoundException {
+        FileHandler fileHandler = new FileHandler();
+        String content = "Dbsojwpsf, mbufs sfobnfe EDT2aaa, xbt b tztufn jnqmfnfoufe cz uif Gfefsbm Cvsfbv pg Jowftujhbujpo (GCJ) uibu xbt\n" +
+                "eftjhofe up npojups fnbjm boe fmfduspojd dpnnvojdbujpot. Ju vtfe b dvtupnjAbcmf qbdlfu tojggfs uibu dpvme npojups bmm\n" +
+                "pg b ubshfu vtfs't Joufsofu usbggjd. Dbsojwpsf xbt jnqmfnfoufe jo Pdupcfs 2008. Cz 3aa6 ju ibe cffo sfqmbdfe xjui\n" +
+                "jnqspwfe dpnnfsdjbm tpguxbsf.";
+        String expected = fileHandler.readFile(0);
+        assertEquals(content, expected, "When given a file number the output should be the relating file.");
+    }
+
+    @Test
+    void readFileExceptionWithNumber() {
+        FileHandler fileHandler = new FileHandler();
+        assertThrows(FileNotFoundException.class, () -> {
+            fileHandler.readFile(5);
+        }, "Asking to read a file that does not exist should throw a FileNotFoundException.");
+    }
+
+    @Test
+    void readFileExceptionWithNegativeNumber() {
+        FileHandler fileHandler = new FileHandler();
+        assertThrows(FileNotFoundException.class, () -> {
+            fileHandler.readFile(-1);
+        }, "Asking to read a file that does not exist should throw a FileNotFoundException.");
+    }
+
+
 }
