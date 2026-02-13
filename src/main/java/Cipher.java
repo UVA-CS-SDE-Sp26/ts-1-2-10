@@ -12,8 +12,7 @@ public class Cipher {
     }
 
     public void getAltKey(String altKey) throws FileNotFoundException {
-        File file = new File(altKey);
-        Scanner scan = new Scanner(file);
+        Scanner scan = new Scanner(altKey);
         if (!scan.hasNextLine()) {
             throw new FileNotFoundException("Key file is empty");
         }
@@ -25,8 +24,7 @@ public class Cipher {
         }
         else{
             key2 = key1;
-            String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-            key1 = alphabet.substring(0, key2.length());
+            key1 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         }
         scan.close();
     }
@@ -35,7 +33,7 @@ public class Cipher {
         StringBuilder output = new StringBuilder();
 
         if (key1.length() != key2.length()) {
-            throw new IllegalArgumentException("Key lengths do not match");
+            throw new IllegalArgumentException("Key lengths do not match. Cannot decipher.");
         }
         for (int i = 0; i < text.length(); i++) {
             char curr = text.charAt(i);

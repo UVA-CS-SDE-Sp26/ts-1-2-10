@@ -21,7 +21,7 @@ public class UserInterface {
     }
     public void partitionUserInput(String[] input){
         try{
-            if(input.length == 1) {
+            if(input.length != 0) {
                 fileSelected = input[0];
             }
         } catch(Exception e){

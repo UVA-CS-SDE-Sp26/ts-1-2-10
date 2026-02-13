@@ -23,7 +23,7 @@ public class ProgramControl {
             int number = Integer.parseInt(fileName);
             text = fileHandler.readFile(number);
             String[] files = fetchFile();
-            String file = files[number];
+            String file = files[number - 1];
             if(file.endsWith("txt"))
                 return text;
 
@@ -46,7 +46,7 @@ public class ProgramControl {
             int number = Integer.parseInt(fileName);
             text = fileHandler.readFile(number);
             String[] files = fetchFile();
-            String file = files[number];
+            String file = files[number - 1];
             if(file.endsWith("txt"))
                 return text;
 
