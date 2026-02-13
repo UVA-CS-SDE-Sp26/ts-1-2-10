@@ -5,7 +5,7 @@ public class ProgramControl {
     private Cipher cipher;
 
     public ProgramControl() {
-        this(new Filehandler(), new Cipher());
+        this(new FileHandler(), new Cipher());
     }
 
     ProgramControl(FileHandler fileHandler, Cipher cipher) {
