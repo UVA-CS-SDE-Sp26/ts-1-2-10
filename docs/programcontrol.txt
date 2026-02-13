@@ -8,17 +8,21 @@ UML -
 Programcontrol
 --------------
 -filehandler: Filehandler
+-cipher: Cipher
 --------------
 +fetchFile(): String
++fetchFile(String fileName): String
 +fetchFile(String fileName, String key): String
 
 PSEUDOCODE -
 
 fetchFile() -
-    filehandler.readFile()
+    return filehandler.readFile()
 
-fetchFile(fileName, key) -
-    if key not NIL:
-        filehandler.readFile(fileName, key)
-    else:
-        filehandler.readFile(fileName)
+fetchFile(fileName) -
+    text = filehandler.readFile(fileName)
+    return cipher.decipher()
+
+ fetchFile(fileName, key) -
+    text = filehander.readFile(fileName)
+    return cipher.decipher(key)
