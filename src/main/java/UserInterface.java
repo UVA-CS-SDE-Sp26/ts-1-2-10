@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.lang.classfile.instruction.ExceptionCatch;
 
 public class UserInterface {
     private String fileSelected;
@@ -18,7 +19,11 @@ public class UserInterface {
         partitionUserInput(input);
     }
     public void partitionUserInput(String[] input){
-        fileSelected = input[0];
+        try{
+            fileSelected = input[0];
+        } catch(Exception e){
+            System.out.println("An error occured." + e.getMessage());
+        }
         if(input.length==2){
             altKey = input[1];
         }
