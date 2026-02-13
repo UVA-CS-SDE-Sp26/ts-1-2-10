@@ -7,15 +7,18 @@ written before code is written.
 UML -
 Programcontrol
 --------------
+-filehandler: Filehandler
+--------------
 +fetchFile(): String
 +fetchFile(String fileName, String key): String
 
 PSEUDOCODE -
 
 fetchFile() -
-    new Filehandler obj
-    obj.readFile()
+    filehandler.readFile()
 
 fetchFile(fileName, key) -
-    new Filehandler obj
-    obj.readFile(fileName, key)
+    if key not NIL:
+        filehandler.readFile(fileName, key)
+    else:
+        filehandler.readFile(fileName)
