@@ -9,24 +9,24 @@ class UserInterfaceTest {
     private static UserInterface testInterface;
     @BeforeEach
     public void initializeUI(){
-        String[] userInput = new String[]{"filename01","abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"};
+        String[] userInput = new String[]{"01","abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"};
         testInterface = new UserInterface(userInput);
     }
 
     @Test
     void testPartitionUserInput() {
-        assertEquals("carnivore.txt", testInterface.getFileSelected());
-        assertEquals("abc", testInterface.getAltKey());
+        assertEquals("01", testInterface.getFileSelected());
+        assertEquals("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", testInterface.getAltKey(),"Name");
     }
 
     @Test
     void testGetFileSelected() {
-        assertEquals("filename01", testInterface.getFileSelected());
+        assertEquals("01", testInterface.getFileSelected());
     }
 
     @Test
     void testGetAltKey() {
-        assertEquals("abc", testInterface.getAltKey());
+        assertEquals("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", testInterface.getAltKey());
     }
 
     @Test
