@@ -1,6 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+
 
 public class Cipher {
 
@@ -12,19 +10,23 @@ public class Cipher {
         key2 = "bcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890a";
     }
 
-    public void getAltKey(String altKey) throws FileNotFoundException {
+    public void getAltKey(String altKey){
+        if (altKey == null) {
+            throw new IllegalArgumentException("altKey cannot be null");
+        }
+        if (altKey.length() != key1.length()) {
+            throw new IllegalArgumentException("Key lengths do not match.");
+        }
         key2 = altKey;
     }
 
     public String decipher(String text) {
         StringBuilder output = new StringBuilder();
-
-        if (key1.length() != key2.length()) {
-            throw new IllegalArgumentException("Key lengths do not match. Cannot decipher.");
+        if (text == null) {
+            throw new IllegalArgumentException("text cannot be null");
         }
         for (int i = 0; i < text.length(); i++) {
             char curr = text.charAt(i);
-
             int index = key2.indexOf(curr);
 
             if (index != -1) {
@@ -34,6 +36,5 @@ public class Cipher {
             }
         }
         return output.toString();
-
     }
 }

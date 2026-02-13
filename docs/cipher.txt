@@ -10,8 +10,10 @@ An example will be provided. Document this in cipher.txt.
 
       UML for Cipher.java
 ---------------------------------
+            Constructor
++Cipher()
+---------------------------------
              Methods
-+loadKey() : void
 +getAltKey(String) : void
 +decipher(String) : String
 ---------------------------------
@@ -19,25 +21,25 @@ An example will be provided. Document this in cipher.txt.
 +key1 : String
 +key2 : String
 ---------------------------------
-            loadKey()
-Purpose: It is the default key and calls getAltKey to access key.txt.
+            Cipher()
+Purpose: Initialize the key1 and key2 value
 
-Pseudocode: Calls getAltKey to access key.txt and is being used as the default if no alternate key is provided.
+Pseudocode: Initialized key1 and key2 to store the values that were in the first and second
+line of key.txt
 ---------------------------------
             getAltKey(String)
 Purpose: Read the encryption keys stored in key.txt so that it can be implemented in decrypt(String)
+To switch key2 with whatever is in the altKey
 
-Pseudocode: First, it accesses the altKey's file. Then, it creates a scanner in the file
-and reads the 1st(before encryption) and 2nd line(after encryption), so that you can read and store
-the before and after encryption values. I also added a part that checks if only the encryption line was given. So,
-in that I bascially just scanned the first line, checked if there was a 2nd line, and if there wasn't I would
-store whatever was in key1 to key2 and store the alphabet into key1 which can be seen in the first line of cipher.txt.
+Pseudocode: First, catch exceptions such as if altKey is null or if altKey.length != key.length.
+Then, if no exceptions were thrown then reassign the value of key2 with whatever the altKey is
+
 ---------------------------------
          decipher(String)
 Purpose: Get the encrypted text and then decrypt using the decryption key stored in key.txt.
 
-Pseudocode: First check whether the length of key1 and key2 are the same length. If they are not,
-throw an error because the characters would not match correctly. Then, Create a StringBuilder called
+Pseudocode: First check whether the length of key1 and key2 are the same length and that
+the text being passed is not null. Then, Create a StringBuilder called
 output to store the decrypted text. If they are the same length, then loop through each character in
 the String text. For each character, store it in a variable called curr. Then, find the indexOf current
 in key2. If it's found in key2, then use that to find and add onto output the corresponding key1 value

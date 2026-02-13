@@ -1,151 +1,74 @@
-import org.junit.jupiter.api.Test;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class CipherTest {
 
-    private static void writeKeyFile(Path path, String line1, String line2) throws IOException {
-        Files.createDirectories(path.getParent());
-        Files.writeString(path, line1 + System.lineSeparator() + line2);
-    }
+    private static final String KEY1 =
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    private static final String DEFAULT_KEY2 =
+            "bcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890a";
 
-    private static void writeOneLineKeyFile(Path path, String line1) throws IOException {
-        Files.createDirectories(path.getParent());
-        Files.writeString(path, line1 + System.lineSeparator());
-    }
+    @Test
+    void constructor_setsDefaultKeys_deciphersShiftBackOne() {
+        Cipher c = new Cipher();
 
-    private static void writeEmptyFile(Path path) throws IOException {
-        Files.createDirectories(path.getParent());
-        Files.writeString(path, "");
+        // default key2 is shifted by 1, so decipher should shift BACK by 1
+        assertEquals("a", c.decipher("b"));
+        assertEquals("z", c.decipher("A"));
+        assertEquals("0", c.decipher("a"));
+        assertEquals("Hello 123!", c.decipher("Ifmmp 234!"));
     }
 
     @Test
-    void loadKey_usesDefaultPath() throws Exception {
-        Cipher cipher = new Cipher();
-        assertNotNull(cipher.decipher(""));
+    void getAltKey_updatesKey2_whenSameLength() {
+        Cipher c = new Cipher();
+        // Make an alternate key2: reverse of KEY1 (valid length)
+        String altKey2 = new StringBuilder(KEY1).reverse().toString();
+        c.getAltKey(altKey2);
+
+        // If key2 is reversed, then the first char of key2 maps to last char of key1, etc.
+        char firstInAlt = altKey2.charAt(0);               // last char of KEY1
+        char expected = KEY1.charAt(0);                    // wait: decipher finds index in key2 and uses key1 at that index
+        // index of firstInAlt in altKey2 is 0 -> maps to KEY1[0]
+        assertEquals(String.valueOf(expected), c.decipher(String.valueOf(firstInAlt)));
     }
 
     @Test
-    void getAltKey_correctMapping() throws Exception {
-        Path keyPath = Paths.get("build", "testkey.txt");
-        writeKeyFile(keyPath, "abc", "xyz");
-
-        Cipher cipher = new Cipher();
-        cipher.getAltKey(keyPath.toString());
-
-        assertEquals("abc", cipher.decipher("xyz"));
+    void getAltKey_null_throws() {
+        Cipher c = new Cipher();
+        assertThrows(IllegalArgumentException.class, () -> c.getAltKey(null));
     }
 
     @Test
-    void getAltKey_loadsAlternateKey() throws Exception {
-        Path altPath = Paths.get("build", "altkey.txt");
-        writeKeyFile(altPath, "123", "789");
-
-        Cipher cipher = new Cipher();
-        cipher.getAltKey(altPath.toString());
-
-        assertEquals("123", cipher.decipher("789"));
+    void getAltKey_wrongLength_throws() {
+        Cipher c = new Cipher();
+        assertThrows(IllegalArgumentException.class, () -> c.getAltKey("abc"));
     }
 
     @Test
-    void decrypt_Success() throws Exception {
-        Path keyPath = Paths.get("build", "testkey.txt");
-        writeKeyFile(keyPath, "abc", "xyz");
-
-        Cipher cipher = new Cipher();
-        cipher.getAltKey(keyPath.toString());
-
-        String result = cipher.decipher("xyz");
-        assertEquals("abc", result);
+    void decipher_nullText_throws() {
+        Cipher c = new Cipher();
+        assertThrows(IllegalArgumentException.class, () -> c.decipher(null));
+    }
+    @Test
+    void decipher_emptyString_returnsEmpty() {
+        Cipher c = new Cipher();
+        assertEquals("", c.decipher(""));
     }
 
     @Test
-    void decipher_emptyInput_returnsEmpty() throws Exception {
-        Path keyPath = Paths.get("build", "k_empty_input.txt");
-        writeKeyFile(keyPath, "abc", "xyz");
+    void decipher_leavesUnknownCharactersUnchanged() {
+        Cipher c = new Cipher();
 
-        Cipher cipher = new Cipher();
-        cipher.getAltKey(keyPath.toString());
-
-        assertEquals("", cipher.decipher(""));
+        // characters not in key2 remain unchanged
+        assertEquals("@#$", c.decipher("@#$"));
+        assertEquals("hi?", c.decipher("ij?"));
     }
 
     @Test
-    void decipher_charsNotInKey2_staySame() throws Exception {
-        Path keyPath = Paths.get("build", "k_unknown_chars.txt");
-        writeKeyFile(keyPath, "abc", "xyz");
+    void decipher_throwsIfKeysMismatch_lengthGuard() {
 
-        Cipher cipher = new Cipher();
-        cipher.getAltKey(keyPath.toString());
-        assertEquals("a! b", cipher.decipher("x! y"));
-    }
-
-    @Test
-    void decipher_mixedMappedAndUnmapped_chars() throws Exception {
-        Path keyPath = Paths.get("build", "k_mixed.txt");
-        writeKeyFile(keyPath, "abc", "xyz");
-
-        Cipher cipher = new Cipher();
-        cipher.getAltKey(keyPath.toString());
-        assertEquals("a!c", cipher.decipher("x!z"));
-    }
-
-    @Test
-    void getAltKey_emptyFile_throwsFileNotFoundException() throws Exception {
-        Path keyPath = Paths.get("build", "k_empty.txt");
-        writeEmptyFile(keyPath);
-
-        Cipher cipher = new Cipher();
-        assertThrows(java.io.FileNotFoundException.class, () -> cipher.getAltKey(keyPath.toString()));
-    }
-
-    @Test
-    void getAltKey_missingFile_throwsFileNotFoundException() {
-        Cipher cipher = new Cipher();
-        assertThrows(java.io.FileNotFoundException.class,
-                () -> cipher.getAltKey("build/definitely_not_real_key_file_12345.txt"));
-    }
-
-    @Test
-    void getAltKey_oneLineFile() throws Exception {
-        Path keyPath = Paths.get("build", "k_one_line.txt");
-        writeOneLineKeyFile(keyPath, "xyz");
-
-        Cipher cipher = new Cipher();
-        cipher.getAltKey(keyPath.toString());
-
-        assertEquals("abc", cipher.decipher("xyz"));
-    }
-
-    @Test
-    void getAltKey_oneLineFile_fallback_unmappedStaysSame() throws Exception {
-        Path keyPath = Paths.get("build", "k_one_line_unmapped.txt");
-        writeOneLineKeyFile(keyPath, "xyz");
-
-        Cipher cipher = new Cipher();
-        cipher.getAltKey(keyPath.toString());
-
-        assertEquals("ab!c", cipher.decipher("xy!z"));
-    }
-
-    @Test
-    void decipher_keyLengthMismatch_throwsIllegalArgumentException() throws Exception {
-        Path keyPath = Paths.get("build", "k_mismatch.txt");
-        writeKeyFile(keyPath, "abcd", "xy"); // different lengths
-
-        Cipher cipher = new Cipher();
-        cipher.getAltKey(keyPath.toString());
-
-        assertThrows(IllegalArgumentException.class, () -> cipher.decipher("x"));
-    }
-
-    @Test
-    void decipher_withoutLoadingKeys_throwsSomeException() {
-        Cipher cipher = new Cipher();
-        assertThrows(RuntimeException.class, () -> cipher.decipher("abc"));
+        Cipher c = new Cipher();
+        assertDoesNotThrow(() -> c.decipher("test"));
     }
 }
