@@ -19,16 +19,13 @@ public class UserInterface {
     public UserInterface(String[] input) {
         partitionUserInput(input);
     }
-    public void partitionUserInput(String[] input){
-        try{
-            if(input.length != 0) {
-                fileSelected = input[0];
+    public void partitionUserInput(String[] input) {
+        if (input.length != 0) {
+            fileSelected = input[0];
+
+            if (input.length == 2) {
+                altKey = input[1];
             }
-        } catch(Exception e){
-            System.out.println("An error occurred. " + e.getMessage());
-        }
-        if(input.length==2){
-            altKey = input[1];
         }
     }
     public void setProgramControl(ProgramControl pc){

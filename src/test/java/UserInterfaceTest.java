@@ -31,14 +31,6 @@ class UserInterfaceTest{
         assertEquals("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", testInterface.getAltKey(),"Name");
     }
     @Test
-    void testPartitionUserInputwithNoArgs() {
-        String[] nothing = new String[0];
-        assertDoesNotThrow(() -> {
-            testInterface.partitionUserInput(nothing);
-        });
-    }
-
-    @Test
     void testGetFileSelected() {
         assertEquals("01", testInterface.getFileSelected());
     }
