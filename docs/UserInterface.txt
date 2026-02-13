@@ -32,3 +32,5 @@ userInterface
 ----------------------
 partitionUserInput()
 transferFileSelected()
+transferFileSelectedWithAltKey()
+transfer()
