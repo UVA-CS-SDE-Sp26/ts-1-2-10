@@ -4,14 +4,14 @@ import java.util.Scanner;
 
 public class Cipher {
 
-    private static String key1;
-    private static String key2;
+    private String key1;
+    private String key2;
 
-    public static void loadKey() throws FileNotFoundException {
+    public void loadKey() throws FileNotFoundException {
         getAltKey("ciphers/key.txt");
     }
 
-    public static void getAltKey(String altKey) throws FileNotFoundException {
+    public void getAltKey(String altKey) throws FileNotFoundException {
         File file = new File(altKey);
         Scanner scan = new Scanner(file);
         if (!scan.hasNextLine()) {

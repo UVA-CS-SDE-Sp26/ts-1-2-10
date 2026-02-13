@@ -1,8 +1,8 @@
 import java.io.FileNotFoundException;
 
 public class ProgramControl {
-    private FileHandler fileHandler;
-    private Cipher cipher;
+    private final FileHandler fileHandler;
+    private final Cipher cipher;
 
     public ProgramControl() {
         this(new FileHandler(), new Cipher());
@@ -38,6 +38,7 @@ public class ProgramControl {
         catch (NumberFormatException e){
             text = fileHandler.readFile(fileName);
         }
-        return cipher.decipher(text, key);
+        cipher.getAltKey(key);
+        return cipher.decipher(text);
     }
 }
