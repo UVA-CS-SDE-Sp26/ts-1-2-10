@@ -22,11 +22,22 @@ public class ProgramControl {
         try{
             int number = Integer.parseInt(fileName);
             text = fileHandler.readFile(number);
+            String[] files = fetchFile();
+            String file = files[number];
+            if(file.endsWith("txt"))
+                return text;
+
+            cipher.loadKey();
+            return cipher.decipher(text);
         }
-        catch (NumberFormatException e){
+        catch (NumberFormatException e) {
             text = fileHandler.readFile(fileName);
+            if(text.endsWith("txt"))
+                return text;
+
+            cipher.loadKey();
+            return cipher.decipher(text);
         }
-        return cipher.decipher(text);
     }
 
     public String fetchFile(String fileName, String key) throws FileNotFoundException {
@@ -34,11 +45,21 @@ public class ProgramControl {
         try{
             int number = Integer.parseInt(fileName);
             text = fileHandler.readFile(number);
+            String[] files = fetchFile();
+            String file = files[number];
+            if(file.endsWith("txt"))
+                return text;
+
+            cipher.getAltKey(key);
+            return cipher.decipher(text);
         }
-        catch (NumberFormatException e){
+        catch (NumberFormatException e) {
             text = fileHandler.readFile(fileName);
+            if (text.endsWith("txt"))
+                return text;
+
+            cipher.getAltKey(key);
+            return cipher.decipher(text);
         }
-        cipher.getAltKey(key);
-        return cipher.decipher(text);
     }
 }
