@@ -9,7 +9,6 @@ public class CipherTest {
         Files.createDirectories(path.getParent());
         Files.writeString(path, line1 + System.lineSeparator() + line2);
     }
-
     @Test
     void loadKey_defaultPath() throws Exception {
         Path defaultPath = Paths.get("ciphers", "key.txt");

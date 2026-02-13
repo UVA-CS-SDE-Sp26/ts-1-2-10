@@ -32,9 +32,7 @@ public class Cipher {
 
     public String decipher(String text) {
         StringBuilder output = new StringBuilder();
-        if (key1 == null || key2 == null) {
-            throw new IllegalArgumentException("Key file must contain two lines");
-        }
+
         if (key1.length() != key2.length()) {
             throw new IllegalArgumentException("Key lengths do not match");
         }
