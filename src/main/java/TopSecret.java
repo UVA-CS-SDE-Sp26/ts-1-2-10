@@ -4,7 +4,6 @@
 public class TopSecret {
     public static void main(String[]args){
         try{
-            UserInterface UI = new UserInterface(args);
             if(args.length == 0){
                 System.out.println("List of all files: ");
                 String[] list = UI.transfer();
@@ -18,9 +17,11 @@ public class TopSecret {
                 System.out.println(output);
             }
             else if(args.length == 1){
+                UserInterface UI = new UserInterface(args);
                 System.out.println(UI.transferFileSelected());
             }
             else if(args.length == 2){
+                UserInterface UI = new UserInterface(args);
                 System.out.println(UI.transferFileSelectedWithAltKey());
             }
             else{
