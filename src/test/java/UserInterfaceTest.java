@@ -15,18 +15,18 @@ class UserInterfaceTest {
 
     @Test
     void testPartitionUserInput() {
-        assertTrue(testInterface.getFileSelected().equals("carnivore.txt"));
-        assertTrue(testInterface.getAltKey().equals("abc"));
+        assertEquals("carnivore.txt", testInterface.getFileSelected());
+        assertEquals("abc", testInterface.getAltKey());
     }
 
     @Test
     void testGetFileSelected() {
-        assertTrue(testInterface.getFileSelected().equals("filename01"));
+        assertEquals("filename01", testInterface.getFileSelected());
     }
 
     @Test
     void testGetAltKey() {
-        assertTrue(testInterface.getAltKey().equals("abc"));
+        assertEquals("abc", testInterface.getAltKey());
     }
 
     @Test
