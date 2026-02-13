@@ -14,59 +14,37 @@ public class fileHandler {
         return files;
     }
 
-    public String readFile(String fileName){
+    public String readFile(String fileName) throws FileNotFoundException{
         //returns the contents of the specified file using regular decrypting key
         String path = "./data/" + fileName;
         String contents = "";
 
-        try{
-            File file = new File(path);
-            Scanner readIn = new Scanner(file);
+        File file = new File(path);
+        Scanner readIn = new Scanner(file);
 
-            while(readIn.hasNextLine()){
-                contents += readIn.nextLine();
-            }
-
-            readIn.close();
-        }
-        catch(FileNotFoundException e){
-            System.out.println("No such file found");
-            System.exit(1);
+        while(readIn.hasNextLine()){
+            contents += readIn.nextLine() + "\n";
         }
 
-        //deciphers the contents of the specified file using regular decrypting key
-        Cipher cipher = new Cipher();
-        contents = cipher.decrypt(contents);
+        readIn.close();
 
         return contents;
     }
 
-    public String readFile(String fileName, String key){
+    public String readFile(String fileName, String key) throws FileNotFoundException{
         //returns the contents of the specified files using unique decrypting key
         String path = "./data/" + fileName;
         String contents = "";
 
-        try{
-            File file = new File(path);
-            Scanner readIn = new Scanner(file);
+        File file = new File(path);
+        Scanner readIn = new Scanner(file);
 
-            while(readIn.hasNextLine()){
-                contents += readIn.nextLine();
-            }
-
-            readIn.close();
-        }
-        catch(FileNotFoundException e){
-            System.out.println("No such file found");
-            System.exit(1);
+        while(readIn.hasNextLine()){
+            contents += readIn.nextLine() + "\n";
         }
 
-        //deciphers the contents of the specified file using unique decrypting key
-        Cipher cipher = new Cipher(key);
-        contents = cipher.decrypt(contents);
+        readIn.close();
 
-        //Chipher cipher = new Cipher();
-        //contents = cipher.decrypt(contents, key);
 
         return contents;
     }
