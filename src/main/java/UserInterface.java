@@ -20,7 +20,9 @@ public class UserInterface {
     }
     public void partitionUserInput(String[] input){
         try{
-            fileSelected = input[0];
+            if(input.length == 1) {
+                fileSelected = input[0];
+            }
         } catch(Exception e){
             System.out.println("An error occurred. " + e.getMessage());
         }
