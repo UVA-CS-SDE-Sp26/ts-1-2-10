@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Decipher {
+public class Cipher {
 
     private static String key1;
     private static String key2;
@@ -14,16 +14,23 @@ public class Decipher {
     public static void getAltKey(String altKey) throws FileNotFoundException {
         File file = new File(altKey);
         Scanner scan = new Scanner(file);
+        if (!scan.hasNextLine()) {
+            throw new FileNotFoundException("Key file is empty");
+        }
         if (scan.hasNextLine()) {
             key1 = scan.nextLine();
         }
         if (scan.hasNextLine()) {
             key2 = scan.nextLine();
         }
+        else{
+            key2 = key1;
+            key1 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        }
         scan.close();
     }
 
-    public static String decrypt(String text) {
+    public String decipher(String text) {
         StringBuilder output = new StringBuilder();
         if (key1 == null || key2 == null) {
             throw new IllegalArgumentException("Key file must contain two lines");
@@ -42,7 +49,6 @@ public class Decipher {
                 output.append(curr);
             }
         }
-
         return output.toString();
 
     }

@@ -8,12 +8,12 @@ This file will contain two lines, the first line is the actual letter,
 the second line is the cipher match. When the cipher is accessed, it must be validated.
 An example will be provided. Document this in cipher.txt.
 
-      UML for Decipher.java
+      UML for Cipher.java
 ---------------------------------
              Methods
 +loadKey() : void
 +getAltKey(String) : void
-+decrypt(String) : String
++decipher(String) : String
 ---------------------------------
             Variables
 +key1 : String
@@ -29,9 +29,11 @@ Purpose: Read the encryption keys stored in key.txt so that it can be implemente
 
 Pseudocode: First, it accesses the altKey's file. Then, it creates a scanner in the file
 and reads the 1st(before encryption) and 2nd line(after encryption), so that you can read and store
-the before and after encryption values.
+the before and after encryption values. I also added a part that checks if only the encryption line was given. So,
+in that I bascially just scanned the first line, checked if there was a 2nd line, and if there wasn't I would
+store whatever was in key1 to key2 and store the alphabet into key1 which can be seen in the first line of cipher.txt.
 ---------------------------------
-         decrypt(String)
+         decipher(String)
 Purpose: Get the encrypted text and then decrypt using the decryption key stored in key.txt.
 
 Pseudocode: First check whether the length of key1 and key2 are the same length. If they are not,
