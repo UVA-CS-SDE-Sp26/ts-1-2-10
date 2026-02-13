@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 /**
  * Commmand Line Utility
  */
@@ -19,7 +17,7 @@ public class TopSecret {
                 }
                 System.out.println(output);
             }
-            else if(args.length ==1){
+            else if(args.length == 1){
                 System.out.println(UI.transferFileSelected());
             }
             else if(args.length == 2){
